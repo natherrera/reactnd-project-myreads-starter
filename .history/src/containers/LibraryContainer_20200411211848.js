@@ -9,13 +9,16 @@ import BookShelf from '../components/BookShelf'
 class LibraryContainer extends Component {
 
     constructor(props) {
+        console.log(props);
 
         super(props);
 
+        const { allBooks } = props;
         this.state = {
             bookShelfs: [
                 'Currently Reading', 'Want to Read', 'Read'
-            ]
+            ],
+            allBooks: allBooks
         }
 
     }
@@ -24,6 +27,7 @@ class LibraryContainer extends Component {
 
     render() {
         const {onBookChange, allBooks} = this.props;
+        // console.log(allBooks);
 
         return (
 
@@ -33,13 +37,13 @@ class LibraryContainer extends Component {
                 </div>
                 <div className="list-books-content"
                     onChange={
-                        () => allBooks
+                        () => this.state.allBooks
                 }>
                     <div> {
                         this.state.bookShelfs.map((item, i) => <BookShelf key={i}
                             title={item}
                             books={
-                                allBooks
+                                this.state.allBooks
                             }
                             onBookChange={onBookChange}/>)
                     } </div>
@@ -53,9 +57,10 @@ class LibraryContainer extends Component {
 }
 
 
-// LibraryContainer.propTypes = {
-//     onBookChange: propTypes.func,
-//     onChange: propTypes.func
-// }
+LibraryContainer.propTypes = {
+    onBookChange: propTypes.func,
+    onChange: propTypes.func
+
+}
 
 export default LibraryContainer;

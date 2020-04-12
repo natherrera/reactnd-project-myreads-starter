@@ -12,10 +12,13 @@ class LibraryContainer extends Component {
 
         super(props);
 
+        const { allBooks } = props;
+        console.log(allBooks);
         this.state = {
             bookShelfs: [
                 'Currently Reading', 'Want to Read', 'Read'
-            ]
+            ],
+            allBooks: allBooks
         }
 
     }
@@ -24,6 +27,7 @@ class LibraryContainer extends Component {
 
     render() {
         const {onBookChange, allBooks} = this.props;
+        // console.log(allBooks);
 
         return (
 

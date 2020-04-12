@@ -51,7 +51,9 @@ class SearchContainer extends React.Component {
                                 {
                                     this.state.booksSearched
                                         .map((book) => (
+
                                                 <Book key={book.id} book={book} onBookChange={onBookChange} />
+
                                         ))
                                 }
                             </ol>

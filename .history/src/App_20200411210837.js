@@ -17,24 +17,15 @@ class BooksApp extends React.Component {
         booksSearched: []
     }
 
-    componentDidMount() {
-        BooksAPI
-            .getAll()
-            .then((allBooks) =>
-            {
-                this.setState({ allBooks });
-            });
+    componentDidUpdate() {
+        BooksAPI.getAll().then((allBooks) => {
+            this.setState({...allBooks, allBooks})
+        })
     }
 
-    onBookChange = (book, newShelf) => {
-        BooksAPI.update(book, newShelf);
+    onBookChange = (book, previousShelf, newShelf) => {
 
-        BooksAPI
-            .getAll()
-            .then((allBooks) =>
-            {
-                this.setState({ allBooks });
-            });
+        BooksAPI.update(book, newShelf);
 
     }
 
@@ -73,6 +64,7 @@ class BooksApp extends React.Component {
 
     render() {
 
+
         return (
             <div className="app">
                 <Route path='/search'
@@ -92,18 +84,9 @@ class BooksApp extends React.Component {
                 <Route exact path='/'
                     render={
                         () => (
-                            <LibraryContainer
-                            onBookChange={
+                            <LibraryContainer onBookChange={
                                 this.onBookChange
-                            }
-                            allBooks={
-                                (() => {
-                                    const books = [...this.state.allBooks];
-                                    console.log("BOOKS > ",books);
-                                    return books;
-                                })()
-                            }
-                            />
+                            }/>
                         )
                     }/>
             </div>

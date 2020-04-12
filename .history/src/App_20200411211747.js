@@ -26,15 +26,9 @@ class BooksApp extends React.Component {
             });
     }
 
-    onBookChange = (book, newShelf) => {
-        BooksAPI.update(book, newShelf);
+    onBookChange = (book, previousShelf, newShelf) => {
 
-        BooksAPI
-            .getAll()
-            .then((allBooks) =>
-            {
-                this.setState({ allBooks });
-            });
+        BooksAPI.update(book, newShelf);
 
     }
 
@@ -97,11 +91,7 @@ class BooksApp extends React.Component {
                                 this.onBookChange
                             }
                             allBooks={
-                                (() => {
-                                    const books = [...this.state.allBooks];
-                                    console.log("BOOKS > ",books);
-                                    return books;
-                                })()
+                                this.state.allBooks
                             }
                             />
                         )

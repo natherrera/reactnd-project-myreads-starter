@@ -13,59 +13,59 @@ class BooksApp extends React.Component {
             'Currently Reading', 'Want to Read', 'Read'
         ],
         allBooks: [],
-        query: '',
-        booksSearched: []
+        query: ''
     }
 
-    refreshLibrary() {
+    componentDidMount() {
         BooksAPI.getAll().then((allBooks) => {
-            this.setState({...allBooks, allBooks})
-        })
+            this.setState({allBooks});
+        });
     }
 
-    onBookChange = (book, previousShelf, newShelf) => {
+    onBookChange(book, previousShelf, newShelf) {
+        book.shelf = newShelf;
 
-        BooksAPI.update(book, newShelf);
-
+        if (book.fromSearching && previousShelf === 'none') {
+            this.addBook(book);
+        } else {
+            this.moveBook(book);
+        }
     }
 
+    onQuery(query) {
+      console.log(query);
+    }
 
-    onQuery = (query) =>
-    {
-        // console.log(this.state.allBooks);
-        // Empty query handling.
-        if (query === '') return this.setState({ query });
+    addBook = (book) => {
+        this.setState((currentState) => ({
+            books: [
+                ...currentState.books,
+                book
+            ]
+        }));
+    }
 
-        BooksAPI
-            .search(query)
-            .then((response) =>
-            {
-                if (response.error)
-                {
-                    this.setState({ query, booksSearched: [] });
-                }
-                else
-                {
-                    // Gets shelf from each book in shelves in a dictionary.
-                    debugger;
-                    const shelves = this.state.allBooks.toDictionary((b) => b.id, (b) => b.shelf);
-                    // Appends 'shelf' to searched books with matching id.
-                    response
-                        .forEach((b) =>
-                        {
-                            b.shelf = shelves[b.id] || 'none';
-                            b.fromSearching = true;
-                        });
+    moveBook = (book) => {
+        const {allBooks, booksSearched} = this.state;
 
-                    this.setState({ query, booksSearched: response });
-                }
-            });
+        this.updateBook(allBooks, book.id, book.shelf);
+        this.updateBook(booksSearched, book.id, book.shelf);
+
+        this.setState({
+            allBooks: [...allBooks.where((b) => b.id !== book.id || book.shelf !== 'none')],
+            booksSearched: [...booksSearched]
+        });
+    }
+
+    updateBook = (books, bookId, shelf) => { // Search for current book in collection.
+        let book = books.first((b) => b.id === bookId);
+
+        if (book) { // Updates book shelf.
+            book.shelf = shelf;
+        }
     }
 
     render() {
-
-        this.refreshLibrary();
-
         return (
             <div className="app">
                 <Route path='/search'

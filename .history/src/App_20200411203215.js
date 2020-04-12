@@ -25,16 +25,53 @@ class BooksApp extends React.Component {
 
     onBookChange = (book, previousShelf, newShelf) => {
 
-        BooksAPI.update(book, newShelf);
+        book.shelf = newShelf;
 
+        if (book.fromSearching && previousShelf === 'none') {
+            this.addBook(book);
+        } else {
+            this.moveBook(book);
+        }
     }
 
+    addBook = (book) => {
+        this.setState((currentState) => ({
+            allBooks: [
+                ...currentState.books,
+                book
+            ]
+        }));
+    }
+
+    moveBook = (book) => {
+        const {allBooks, booksSearched} = this.state;
+
+        this.updateBook(allBooks, book.id, book.shelf);
+        this.updateBook(booksSearched, book.id, book.shelf);
+        this.setState({
+            allBooks: [...allBooks, allBooks.find((b) => b.id !== book.id || book.shelf !== 'none')],
+            booksSearched: [...booksSearched]
+        });
+    }
+
+    updateBook = (books, bookId, shelf) => { // Search for current book in collection.
+        console.log(books, bookId, shelf);
+        let book = books.find((b) => b.id === bookId);
+        if (book) { // Updates book shelf.
+            book.shelf = shelf;
+        }
+    }
+
+    newLibrary(newLibrary) {
+        console.log(newLibrary);
+    }
 
     onQuery = (query) =>
     {
         // console.log(this.state.allBooks);
         // Empty query handling.
         if (query === '') return this.setState({ query });
+
 
         BooksAPI
             .search(query)

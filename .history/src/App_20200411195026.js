@@ -17,24 +17,59 @@ class BooksApp extends React.Component {
         booksSearched: []
     }
 
-    refreshLibrary() {
+    componentDidMount() {
+
         BooksAPI.getAll().then((allBooks) => {
-            this.setState({...allBooks, allBooks})
-        })
-    }
-
-    onBookChange = (book, previousShelf, newShelf) => {
-
-        BooksAPI.update(book, newShelf);
+            this.setState({ allBooks });
+        });
 
     }
 
+    onBookChange(book, previousShelf, newShelf) {
+        book.shelf = newShelf;
+
+        if (book.fromSearching && previousShelf === 'none') {
+            this.addBook(book);
+        } else {
+            this.moveBook(book);
+        }
+    }
+
+    addBook = (book) => {
+        this.setState((currentState) => ({
+            allBooks: [
+                ...currentState.books,
+                book
+            ]
+        }));
+    }
+
+    moveBook = (book) => {
+        const {allBooks, booksSearched} = this.state;
+
+        this.updateBook(allBooks, book.id, book.shelf);
+        this.updateBook(booksSearched, book.id, book.shelf);
+
+        this.setState({
+            allBooks: [...allBooks.where((b) => b.id !== book.id || book.shelf !== 'none')],
+            booksSearched: [...booksSearched]
+        });
+    }
+
+    updateBook = (books, bookId, shelf) => { // Search for current book in collection.
+        let book = books.first((b) => b.id === bookId);
+
+        if (book) { // Updates book shelf.
+            book.shelf = shelf;
+        }
+    }
 
     onQuery = (query) =>
     {
         // console.log(this.state.allBooks);
         // Empty query handling.
         if (query === '') return this.setState({ query });
+
 
         BooksAPI
             .search(query)
@@ -63,9 +98,6 @@ class BooksApp extends React.Component {
     }
 
     render() {
-
-        this.refreshLibrary();
-
         return (
             <div className="app">
                 <Route path='/search'

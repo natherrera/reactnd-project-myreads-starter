@@ -45,11 +45,10 @@ class BooksApp extends React.Component {
                 }
                 else
                 {
-
-                    console.log('response');
-                    console.log(response);
+                    // Gets shelf from each book in shelves in a dictionary.
+                    debugger;
                     const shelves = this.state.allBooks.map((b) => b.id, (b) => b.shelf);
-
+                    // Appends 'shelf' to searched books with matching id.
                     response
                         .forEach((b) =>
                         {

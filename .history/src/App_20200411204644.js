@@ -46,8 +46,7 @@ class BooksApp extends React.Component {
                 else
                 {
 
-                    console.log('response');
-                    console.log(response);
+                    debugger;
                     const shelves = this.state.allBooks.map((b) => b.id, (b) => b.shelf);
 
                     response

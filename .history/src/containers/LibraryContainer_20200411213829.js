@@ -34,13 +34,12 @@ class LibraryContainer extends Component {
                         () => allBooks
                 }>
                     <div> {
-                        this.state.bookShelfs.map((item, i) => (
-                            <BookShelf key={i}
-                                title={item}
-                                allBooks={allBooks}
-                                onBookChange={onBookChange}
-                            />)
-                        )
+                        this.state.bookShelfs.map((item, i) => <BookShelf key={i}
+                            title={item}
+                            books={
+                                allBooks
+                            }
+                            onBookChange={onBookChange}/>)
                     } </div>
                 </div>
                 <Link to='/search' className="open-search">

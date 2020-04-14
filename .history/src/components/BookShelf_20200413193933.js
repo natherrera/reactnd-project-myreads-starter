@@ -16,14 +16,14 @@ class BookShelf extends Component {
                     <ol className="books-grid">
                         {
                             allBooks
-                            .filter(item => item.shelf.toLowerCase() === title.toLowerCase().replace(/\s/g, ''))
-                            .map((book) =>
-                                <Book
-                                    key={book.id}
-                                    book={book}
-                                    onBookChange={onBookChange}
-                                />
-                            )
+                                .filter(item => item.shelf.toLowerCase() === title.toLowerCase().replace(/\s/g, ''))
+                                .map((book) =>
+                                    <Book
+                                        key={book.id}
+                                        book={book}
+                                        onBookChange={onBookChange}
+                                    />
+                                )
                         }
                     </ol>
                 </div>

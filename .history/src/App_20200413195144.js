@@ -27,7 +27,8 @@ class BooksApp extends React.Component {
     }
 
     onBookChange = (book, current, newShelf) => {
-        console.log('Component: app.js ', book, current, newShelf);
+        console.log('Component: app.js ',book, current, newShelf);
+        // BooksAPI.update(book, newShelf);
     }
 
 

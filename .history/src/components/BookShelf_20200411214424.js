@@ -7,23 +7,22 @@ class BookShelf extends Component {
 
 
     render() {
-        const { title, allBooks, onBookChange } = this.props;
-        console.log('sda');
+        const { title, books, onBookChange } = this.props;
         return (
             <div className="bookshelf">
                 <h2 className="bookshelf-title">{title}</h2>
                 <div className="bookshelf-books">
                     <ol className="books-grid">
                         {
-                            allBooks
-                            .filter(item => item.shelf.toLowerCase() === title.toLowerCase().replace(/\s/g, ''))
-                            .map((book) =>
-                                <Book
-                                    key={book.id}
-                                    book={book}
-                                    onBookChange={onBookChange}
-                                />
-                            )
+                            books
+                                .filter(item => item.shelf.toLowerCase() === title.toLowerCase().replace(/\s/g, ''))
+                                .map((book) =>
+                                    <Book
+                                        key={book.id}
+                                        book={book}
+                                        onBookChange={onBookChange}
+                                    />
+                                )
                         }
                     </ol>
                 </div>

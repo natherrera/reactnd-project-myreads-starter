@@ -1,41 +1,37 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
-import * as BooksAPI from '../library/BooksAPI';
 
 
 class ShelfChanger extends Component {
+
     constructor(props) {
         super(props);
 
-        const { book } = this.props
+        const { currentShelf } = this.props
 
         this.state = {
-            currentShelf: book.shelf
+            currentShelf: currentShelf.shelf,
+            newShelf: '',
+            book: currentShelf,
+
         };
     }
 
     doChangeShelf = (event) => {
-        const { onBookChange, book } = this.props;
+        const { onBookChange } = this.props;
         const newShelf = event.target.value;
-
-        BooksAPI
-        .update(book, newShelf)
-        .then((books) =>
-        {
-            onBookChange && onBookChange(book, this.state.currentShelf, newShelf || 'none', newShelf, books);
-            this.setState({ currentShelf: newShelf });
-        });
+        onBookChange && onBookChange(this.state.book, this.state.currentShelf, newShelf);
+        console.log('Component: shelfchanger',this.state.book, this.state.currentShelf, newShelf);
+        this.setState({ currentShelf: newShelf });
 
     }
 
 
     render() {
 
-        const { book } = this.props;
-
         return (
-            <div className="book-shelf-changer">
-                <select onChange={ this.doChangeShelf }  defaultValue={ this.state.currentShelf }>
+            <div className="book-shelf-changer" onClick={this.info}>
+                <select onChange={this.doChangeShelf}  defaultValue={this.state.currentShelf}>
                     <option value="move" disabled>Move to...</option>
                     <option value="currentlyReading">Currently Reading</option>
                     <option value="wantToRead">Want to Read</option>

@@ -22,7 +22,9 @@ class ShelfChanger extends Component {
         .update(book, newShelf)
         .then((books) =>
         {
-            onBookChange && onBookChange(book, this.state.currentShelf, newShelf || 'none', newShelf, books);
+            onBookChange && onBookChange(book, book.currentShelf, newShelf || 'none', newShelf, books);
+            console.log('Component: shelfchanger ', book, book.currentShelf, newShelf, books);
+            console.log('Component: shelfchanger ', newShelf, books);
             this.setState({ currentShelf: newShelf });
         });
 

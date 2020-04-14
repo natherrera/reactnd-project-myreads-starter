@@ -10,7 +10,10 @@ class ShelfChanger extends Component {
         const { book } = this.props
 
         this.state = {
-            currentShelf: book.shelf
+            currentShelf: book.shelf,
+            newShelf: '',
+            book: currentShelf,
+
         };
     }
 
@@ -22,7 +25,8 @@ class ShelfChanger extends Component {
         .update(book, newShelf)
         .then((books) =>
         {
-            onBookChange && onBookChange(book, this.state.currentShelf, newShelf || 'none', newShelf, books);
+            onBookChange && onBookChange(book, book.currentShelf, newShelf || 'none', book.currentShelf, books);
+            console.log('Component: shelfchanger ',book, book.currentShelf, newShelf);
             this.setState({ currentShelf: newShelf });
         });
 

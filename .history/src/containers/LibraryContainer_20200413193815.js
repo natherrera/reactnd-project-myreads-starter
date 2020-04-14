@@ -37,7 +37,7 @@ class LibraryContainer extends Component {
                         this.state.bookShelfs.map((item, i) => (
                             <BookShelf key={i}
                                 title={item}
-                                allBooks={allBooks}
+                                books={allBooks}
                                 onBookChange={onBookChange}
                             />)
                         )

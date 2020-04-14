@@ -1,28 +1,20 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
-import * as BooksAPI from '../library/BooksAPI';
 
 
 class ShelfChanger extends Component {
-    constructor(props) {
-        super(props);
 
-        const { book } = this.props
-
-        this.state = {
-            currentShelf: book.shelf
-        };
-    }
 
     doChangeShelf = (event) => {
         const { onBookChange, book } = this.props;
         const newShelf = event.target.value;
 
         BooksAPI
-        .update(book, newShelf)
-        .then((books) =>
+        .update(this.state.book, newShelf)
+        .then((allBooks) =>
         {
-            onBookChange && onBookChange(book, this.state.currentShelf, newShelf || 'none', newShelf, books);
+            onBookChange && onBookChange(book, book.currentShelf, newShelf);
+            console.log('Component: shelfchanger ',book, book.currentShelf, newShelf);
             this.setState({ currentShelf: newShelf });
         });
 
@@ -35,7 +27,7 @@ class ShelfChanger extends Component {
 
         return (
             <div className="book-shelf-changer">
-                <select onChange={ this.doChangeShelf }  defaultValue={ this.state.currentShelf }>
+                <select onChange={ this.doChangeShelf }  defaultValue={ book.currentShelf }>
                     <option value="move" disabled>Move to...</option>
                     <option value="currentlyReading">Currently Reading</option>
                     <option value="wantToRead">Want to Read</option>

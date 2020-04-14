@@ -4,7 +4,7 @@ import './resources/css/App.css';
 import * as BooksAPI from './library/BooksAPI';
 import LibraryContainer from './containers/LibraryContainer';
 import SearchContainer from './containers/SearchContainer';
-import 'linqjs';
+
 
 class BooksApp extends React.Component {
 
@@ -47,8 +47,8 @@ class BooksApp extends React.Component {
                 {
 
 
-                    const shelfs = this.state.allBooks.toDictionary((b) => b.id, (b) => b.shelf);
-                    // console.log(shelfs);
+                    const shelfs = this.state.allBooks.map((b) => [{'id': b.id, 'shelf': b.shelf}]);
+
                     response
                         .forEach((b) =>
                         {
@@ -56,7 +56,9 @@ class BooksApp extends React.Component {
                             b.fromSearching = true;
                         });
 
-                    this.setState({ query, booksSearched: response });
+                    console.log(response);
+
+                    // this.setState({ query, booksSearched: response });
                 }
             });
     }

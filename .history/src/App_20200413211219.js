@@ -56,7 +56,9 @@ class BooksApp extends React.Component {
                             b.fromSearching = true;
                         });
 
-                    this.setState({ query, booksSearched: response });
+                    console.log(response);
+
+                    // this.setState({ query, booksSearched: response });
                 }
             });
     }

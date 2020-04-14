@@ -57,6 +57,7 @@ class BooksApp extends React.Component {
                         });
 
                     this.setState({ query, booksSearched: response });
+                    console.log(book);
                 }
             });
     }

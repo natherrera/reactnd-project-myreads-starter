@@ -34,7 +34,8 @@ class BooksApp extends React.Component {
     onQuery = (query) =>
     {
         if (query === '') return this.setState({ query });
-
+        console.log(query);
+        console.log(this.state.query);
         BooksAPI
             .search(query)
             .then((response) =>
@@ -56,7 +57,9 @@ class BooksApp extends React.Component {
                             b.fromSearching = true;
                         });
 
-                    this.setState({ query, booksSearched: response });
+                    console.log(response);
+
+                    // this.setState({ query, booksSearched: response });
                 }
             });
     }

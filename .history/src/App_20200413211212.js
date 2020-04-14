@@ -48,7 +48,7 @@ class BooksApp extends React.Component {
 
 
                     const shelfs = this.state.allBooks.toDictionary((b) => b.id, (b) => b.shelf);
-                    // console.log(shelfs);
+                    console.log(shelfs);
                     response
                         .forEach((b) =>
                         {
@@ -56,7 +56,9 @@ class BooksApp extends React.Component {
                             b.fromSearching = true;
                         });
 
-                    this.setState({ query, booksSearched: response });
+                    console.log(response);
+
+                    // this.setState({ query, booksSearched: response });
                 }
             });
     }

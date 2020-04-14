@@ -46,6 +46,7 @@ class SearchBar extends Component {
 
 SearchBar.propTypes = {
     delay: propTypes.number,
+    onChange: propTypes.func.isRequired,
     query: propTypes.string,
     onQuery: propTypes.func
 }

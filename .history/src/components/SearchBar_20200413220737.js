@@ -8,7 +8,7 @@ class SearchBar extends Component {
     constructor(props) {
         super(props);
 
-        const { query } = this.props
+        const { query, onSearch } = this.props
 
         this.state = {
             value: query
@@ -46,6 +46,7 @@ class SearchBar extends Component {
 
 SearchBar.propTypes = {
     delay: propTypes.number,
+    onChange: propTypes.func.isRequired,
     query: propTypes.string,
     onQuery: propTypes.func
 }

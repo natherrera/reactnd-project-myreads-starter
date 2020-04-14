@@ -40,7 +40,7 @@ class BooksApp extends React.Component {
     }
 
 
-    onSearch = (query) =>
+    onQuery = (query) =>
     {
         if (query === '') return this.setState({ query });
 
@@ -84,8 +84,7 @@ class BooksApp extends React.Component {
                                 allBooks={
                                     this.state.booksSearched
                                 }
-                                onSearch={this.onSearch}
-                                query={this.state.query}
+                                onQuery={this.onQuery}
                             />
                         )
                     }/>

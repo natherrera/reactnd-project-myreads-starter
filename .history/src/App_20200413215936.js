@@ -84,8 +84,7 @@ class BooksApp extends React.Component {
                                 allBooks={
                                     this.state.booksSearched
                                 }
-                                onSearch={this.onSearch}
-                                query={this.state.query}
+                                onQuery={this.onSearch}
                             />
                         )
                     }/>

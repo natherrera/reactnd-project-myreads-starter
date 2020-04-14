@@ -1,9 +1,37 @@
 import React from 'react';
 import propTypes from 'prop-types';
+import * as BooksAPI from '../library/BooksAPI';
 import Book from '../components/Book';
 import SearchBar from '../components/SearchBar';
 
 class SearchContainer extends React.Component {
+
+    // state = {
+    //     query: '',
+    //     // booksSearched: [],
+    // };
+
+
+    // onSearch = (query) => {
+
+    //     const { newLibrary }  = this.props;
+    //     if (query === '') {
+    //         this.setState({ query });
+    //         return;
+    //     }
+
+    //     BooksAPI
+    //         .search(query)
+    //         .then((response) => {
+    //             if (response.error) {
+    //                 this.setState({ query, booksSearched: [] });
+    //             }
+    //             else {
+    //                 this.setState({ query, booksSearched: response });
+    //                 newLibrary && newLibrary(this.state.booksSearched);
+    //             }
+    //         });
+    // }
 
     render() {
         const { query, onBookChange, onSearch, allBooks } = this.props;
@@ -12,7 +40,7 @@ class SearchContainer extends React.Component {
                 <div className="search-books">
 
                     <SearchBar
-                        query={query}
+                        query={this.state.query}
                         onSearch={onSearch}
                     ></SearchBar>
 

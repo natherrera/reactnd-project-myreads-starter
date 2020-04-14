@@ -1,18 +1,47 @@
 import React from 'react';
 import propTypes from 'prop-types';
+import * as BooksAPI from '../library/BooksAPI';
 import Book from '../components/Book';
 import SearchBar from '../components/SearchBar';
 
 class SearchContainer extends React.Component {
 
+    state = {
+        query: '',
+        booksSearched: [],
+    };
+
+
+    // onSearch = (query) => {
+
+    //     const { newLibrary }  = this.props;
+    //     if (query === '') {
+    //         this.setState({ query });
+    //         return;
+    //     }
+
+    //     BooksAPI
+    //         .search(query)
+    //         .then((response) => {
+    //             if (response.error) {
+    //                 this.setState({ query, booksSearched: [] });
+    //             }
+    //             else {
+    //                 this.setState({ query, booksSearched: response });
+    //                 newLibrary && newLibrary(this.state.booksSearched);
+    //             }
+    //         });
+    // }
+
     render() {
-        const { query, onBookChange, onSearch, allBooks } = this.props;
+        const { query, onBookChange, onQuery, allBooks } = this.props
         return (
             <div>
                 <div className="search-books">
 
                     <SearchBar
-                        query={query}
+                        query={this.state.query}
+                        // onChange={this.onSearch}
                         onSearch={onSearch}
                     ></SearchBar>
 
@@ -35,7 +64,7 @@ class SearchContainer extends React.Component {
                                 </label>
                             </div>
                         )}
-                        {allBooks === [] && (
+                        {this.state.booksSearched === [] && (
                             <div className='books-grid'>
                                 <label className='books-grid-no-results'>
                                     <span>No results for <i>{query}</i>!</span>

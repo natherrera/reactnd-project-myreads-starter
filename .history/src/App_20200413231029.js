@@ -27,26 +27,31 @@ class BooksApp extends React.Component {
     }
 
     onBookChange = (book, current, newShelf) => {
-        const { allBooks, booksSearched } = this.state;
-        this.updateBook(allBooks, book.id, newShelf);
-        this.updateBook(booksSearched, book.id, newShelf);
+        // console.log('Component: app.js ', book, current, newShelf);
+
         if (book.fromSearching && current === 'none')
         {
             this.addBook(book);
+            console.log('no existe');
         }
         else
         {
-            this.moveBook(book);
+            console.log('de la libreria');
+            this.moveBook(book, newShelf);
         }
     }
 
     addBook = (book) => {
+        debugger
         this.setState((currentState) => ({ allBooks: [ ...currentState.allBooks, book ] }));
     }
 
-    moveBook = (book) => {
+    moveBook = (book, shelf) => {
         const { allBooks, booksSearched } = this.state;
-        this.setState((currentState) => ({ allBooks: [ ...currentState.allBooks, book ] }));
+        this.updateBook(allBooks, book.id, shelf);
+        this.updateBook(booksSearched, book.id, shelf);
+        console.log(book);
+        // this.setState((currentState) => ({ allBooks: [ ...currentState.allBooks, book ] }));
         this.setState({
             allBooks: [ ...allBooks.where((b) => b.id !== book.id || book.shelf !== 'none') ],
             booksSearched: [ ...booksSearched ]
@@ -62,6 +67,7 @@ class BooksApp extends React.Component {
             book.shelf = shelf;
         }
     }
+
 
     onSearch = (query) =>
     {
@@ -80,6 +86,7 @@ class BooksApp extends React.Component {
 
 
                     const shelfs = this.state.allBooks.toDictionary((b) => b.id, (b) => b.shelf);
+                    // console.log(shelfs);
                     response
                         .forEach((b) =>
                         {

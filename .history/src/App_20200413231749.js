@@ -41,6 +41,7 @@ class BooksApp extends React.Component {
     }
 
     addBook = (book) => {
+        this.updateBook(booksSearched, book.id, shelf);
         this.setState((currentState) => ({ allBooks: [ ...currentState.allBooks, book ] }));
     }
 
@@ -62,6 +63,7 @@ class BooksApp extends React.Component {
             book.shelf = shelf;
         }
     }
+
 
     onSearch = (query) =>
     {

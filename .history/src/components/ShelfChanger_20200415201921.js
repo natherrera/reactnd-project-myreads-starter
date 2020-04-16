@@ -22,16 +22,17 @@ class ShelfChanger extends Component {
         .then((books) =>
         {
             onBookChange && onBookChange(book, this.state.currentShelf, newShelf || 'none', newShelf, books);
+            // this.setState({ currentShelf: newShelf });
         });
 
     }
 
     render() {
 
-        const { book } = this.props;
+
         return (
             <div className="book-shelf-changer">
-                <select onChange={ this.doChangeShelf }  defaultValue={ book.shelf || 'none' }>
+                <select onChange={ this.doChangeShelf }  defaultValue={ this.state.currentShelf || 'none' }>
                     <option value="move" disabled>Move to...</option>
                     <option value="currentlyReading">Currently Reading</option>
                     <option value="wantToRead">Want to Read</option>

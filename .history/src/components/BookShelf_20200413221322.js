@@ -16,9 +16,9 @@ class BookShelf extends Component {
                         {
                             allBooks
                             .filter(item => item.shelf.toLowerCase() === title.toLowerCase().replace(/\s/g, ''))
-                            .map((book, i) =>
+                            .map((book) =>
                                 <Book
-                                    key={i}
+                                    key={book.id}
                                     book={book}
                                     onBookChange={onBookChange}
                                 />

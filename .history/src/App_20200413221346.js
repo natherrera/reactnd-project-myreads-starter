@@ -27,41 +27,20 @@ class BooksApp extends React.Component {
     }
 
     onBookChange = (book, current, newShelf) => {
-        const { allBooks, booksSearched } = this.state;
-        this.updateBook(allBooks, book.id, newShelf);
-        this.updateBook(booksSearched, book.id, newShelf);
+        // console.log('Component: app.js ', book, current, newShelf);
+
         if (book.fromSearching && current === 'none')
         {
-            this.addBook(book);
+            // this.addBook(book);
+            console.log('no existe');
         }
         else
         {
-            this.moveBook(book);
+            console.log('esta en la libreria');
+            // this.moveBook(book);
         }
     }
 
-    addBook = (book) => {
-        this.setState((currentState) => ({ allBooks: [ ...currentState.allBooks, book ] }));
-    }
-
-    moveBook = (book) => {
-        const { allBooks, booksSearched } = this.state;
-        this.setState((currentState) => ({ allBooks: [ ...currentState.allBooks, book ] }));
-        this.setState({
-            allBooks: [ ...allBooks.where((b) => b.id !== book.id || book.shelf !== 'none') ],
-            booksSearched: [ ...booksSearched ]
-        });
-    }
-
-    updateBook = (books, bookId, shelf) => {
-        let book = books
-        .first((b) => b.id === bookId);
-
-        if (book)
-        {
-            book.shelf = shelf;
-        }
-    }
 
     onSearch = (query) =>
     {
@@ -80,6 +59,7 @@ class BooksApp extends React.Component {
 
 
                     const shelfs = this.state.allBooks.toDictionary((b) => b.id, (b) => b.shelf);
+                    // console.log(shelfs);
                     response
                         .forEach((b) =>
                         {
@@ -115,12 +95,12 @@ class BooksApp extends React.Component {
                     render={
                         () => (
                             <LibraryContainer
-                                onBookChange={
-                                    this.onBookChange
-                                }
-                                allBooks={
-                                    this.state.allBooks
-                                }
+                            onBookChange={
+                                this.onBookChange
+                            }
+                            allBooks={
+                                this.state.allBooks
+                            }
                             />
                         )
                     }/>

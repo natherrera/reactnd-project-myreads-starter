@@ -8,7 +8,7 @@ class BookShelf extends Component {
 
     render() {
         const { title, allBooks, onBookChange } = this.props;
-            return (
+        return (
             <div className="bookshelf">
                 <h2 className="bookshelf-title">{title}</h2>
                 <div className="bookshelf-books">
@@ -16,9 +16,9 @@ class BookShelf extends Component {
                         {
                             allBooks
                             .filter(item => item.shelf.toLowerCase() === title.toLowerCase().replace(/\s/g, ''))
-                            .map((book, i) =>
+                            .map((book) =>
                                 <Book
-                                    key={i}
+                                    key={book.id}
                                     book={book}
                                     onBookChange={onBookChange}
                                 />

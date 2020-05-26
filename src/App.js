@@ -1,133 +1,39 @@
-import React from 'react';
-import {Route} from 'react-router-dom';
-import './resources/css/App.css';
-import * as BooksAPI from './library/BooksAPI';
-import LibraryContainer from './containers/LibraryContainer';
-import SearchContainer from './containers/SearchContainer';
-import 'linqjs';
+import React, { lazy, Suspense } from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import { Loader } from './components';
+import Login from './components/layouts/LoginContainter';
+// Lazy loaded components.
+const RouteWithLayout = lazy(() => import('./components/layouts/RouteWithLayout'));
+const AppLayout = lazy(() => import('./components/layouts/AppLayout'));
+const LoginContainer = lazy(() => import('./components/layouts/LoginContainter'));
+const MainContainer = lazy(() => import('./components/layouts/MainContainer'));
 
-class BooksApp extends React.Component {
+class App extends React.Component
+{
 
-    state = {
-        bookShelfs: [
-            'Currently Reading', 'Want to Read', 'Read'
-        ],
-        allBooks: [],
-        query: '',
-        booksSearched: []
-    }
-
-    componentDidMount() {
-        BooksAPI
-            .getAll()
-            .then((allBooks) =>
-            {
-                this.setState({ allBooks });
-            });
-    }
-
-    onBookChange = (book, current, newShelf) => {
-        const { allBooks, booksSearched } = this.state;
-        this.updateBook(allBooks, book.id, newShelf);
-        this.updateBook(booksSearched, book.id, newShelf);
-        if (book.fromSearching && current === 'none')
-        {
-            this.addBook(book);
-        }
-        else
-        {
-            this.moveBook(book);
-        }
-    }
-
-    addBook = (book) => {
-        this.setState((currentState) => ({ allBooks: [ ...currentState.allBooks, book ] }));
-    }
-
-    moveBook = (book) => {
-        const { allBooks, booksSearched } = this.state;
-        this.setState((currentState) => ({ allBooks: [ ...currentState.allBooks, book ] }));
-        this.setState({
-            allBooks: [ ...allBooks.where((b) => b.id !== book.id || book.shelf !== 'none') ],
-            booksSearched: [ ...booksSearched ]
-        });
-    }
-
-    updateBook = (books, bookId, shelf) => {
-        let book = books
-        .first((b) => b.id === bookId);
-
-        if (book)
-        {
-            book.shelf = shelf;
-        }
-    }
-
-    onSearch = (query) =>
+    render()
     {
-        if (query === '') return this.setState({ query });
-
-        BooksAPI
-            .search(query)
-            .then((response) =>
-            {
-                if (response.error)
-                {
-                    this.setState({ query, booksSearched: [] });
-                }
-                else
-                {
-
-
-                    const shelfs = this.state.allBooks.toDictionary((b) => b.id, (b) => b.shelf);
-                    response
-                        .forEach((b) =>
-                        {
-                            b.shelf = shelfs[b.id] || 'none';
-                            b.fromSearching = true;
-                        });
-
-                    this.setState({ query, booksSearched: response });
-                }
-            });
-    }
-
-    render() {
-
         return (
-            <div className="app">
-                <Route path='/search'
-                    render={
-                        () => (
-                            <SearchContainer
-                                onBookChange={
-                                    this.onBookChange
-                                }
-                                allBooks={
-                                    this.state.booksSearched
-                                }
-                                onSearch={this.onSearch}
-                                query={this.state.query}
-                            />
-                        )
-                    }/>
-                <Route exact path='/'
-                    render={
-                        () => (
-                            <LibraryContainer
-                                onBookChange={
-                                    this.onBookChange
-                                }
-                                allBooks={
-                                    this.state.allBooks
-                                }
-                            />
-                        )
-                    }/>
+            <div className='app'>
+                <Suspense fallback={ <Loader message='Cargando' /> }>
+                    <Switch>
+                        <Redirect exact from='/' to='/main' />
+
+                        <Route exact path='/main/login'
+                            component={ LoginContainer }
+                        />
+
+                        <RouteWithLayout exact path='/main'
+                            layout={ AppLayout }
+                            component={ MainContainer }
+                        />
+
+                        {/* <Route component={ NotFoundPage } /> */}
+                    </Switch>
+                </Suspense>
             </div>
-        )
+        );
     }
 }
 
-
-export default BooksApp;
+export default App;

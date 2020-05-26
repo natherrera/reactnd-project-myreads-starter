@@ -1,0 +1,16 @@
+.ui.card, .ui.cards > .card {
+    min-width: 290px !important;
+    width: auto !important;
+}
+
+/* .tabCard .item-card {
+    width: 50% !important;
+} */
+
+.userName {
+    margin-left: 1em;
+}
+
+.userName span {
+    font-weight: 700;
+}

@@ -1,0 +1,13 @@
+.card .header {
+    display: inline-block !important;
+    margin-top: 8px !important;
+}
+
+.card .meta {
+    display: inline-block !important;
+    margin-left: 7px;
+}
+
+.card .description {
+    margin: 1em 0;
+}

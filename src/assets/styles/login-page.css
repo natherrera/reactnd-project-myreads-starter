@@ -1,0 +1,14 @@
+@import '../global/colors.css';
+
+.ui.stackable.grid > .row > .column.wide.noPadding {
+    padding: 0 !important;
+}
+
+.ui.image.login-logo {
+    width: 5em;
+}
+
+.principal-title {
+    margin: 1em 0 3em !important;
+    font-size: 14px !important;
+}

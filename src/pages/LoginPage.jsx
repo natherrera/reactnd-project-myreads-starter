@@ -5,7 +5,6 @@ import { Form, Message } from 'semantic-ui-react';
 // import '../styles/pages/login-page.scss';
 import { SessionAction } from './../store/actions';
 import { loginInputs } from '../config/inputIds';
-import { Validate } from '../utils/Validate';
 
 
 const dropdownUsers = (users = []) => {

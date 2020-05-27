@@ -2,7 +2,7 @@ let users = {
     sarahedo: {
       id: 'sarahedo',
       name: 'Sarah Edo',
-      avatarURL: null,
+      avatarURL: 'https://react.semantic-ui.com/images/avatar/large/jenny.jpg',
       answers: {
         "8xf0y6ziyjabvozdd253nd": 'optionOne',
         "6ni6ok3ym7mf1p33lnez": 'optionTwo',
@@ -14,7 +14,7 @@ let users = {
     tylermcginnis: {
       id: 'tylermcginnis',
       name: 'Tyler McGinnis',
-      avatarURL: null,
+      avatarURL: 'https://react.semantic-ui.com/images/avatar/large/matthew.png',
       answers: {
         "vthrdm985a262al8qx3do": 'optionOne',
         "xj352vofupe1dqz9emx13r": 'optionTwo',
@@ -24,7 +24,7 @@ let users = {
     johndoe: {
       id: 'johndoe',
       name: 'John Doe',
-      avatarURL: null,
+      avatarURL: 'https://react.semantic-ui.com/images/avatar/large/elliot.jpg',
       answers: {
         "xj352vofupe1dqz9emx13r": 'optionOne',
         "vthrdm985a262al8qx3do": 'optionTwo',
@@ -119,11 +119,12 @@ const generateUID = () => {
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 }
 
-const formatQuestion = ({ optionOneText, optionTwoText, author }) => {
+const formatQuestion = ({ optionOneText, optionTwoText, author, id }) => {
     return {
       id: generateUID(),
       timestamp: Date.now(),
       author,
+      idName: id,
       optionOne: {
         votes: [],
         text: optionOneText,
@@ -151,10 +152,11 @@ const webClient = {
     },
     _saveQuestion: (question) =>
     {
-        return new Promise((res, rej) => {
-            const authedUser = question.author;
-            const formattedQuestion = formatQuestion(question);
-            // console.log(formattedQuestion);
+      return new Promise((res, rej) => {
+        const authedUser = question.author;
+        const authedId = question.id;
+        const formattedQuestion = formatQuestion(question);
+
             setTimeout(() => {
                 questions = {
                     ...questions,
@@ -163,12 +165,11 @@ const webClient = {
 
                 users = {
                   ...users,
-                  [authedUser]: {
-                      ...users[authedUser],
-                      questions: users[authedUser].questions.concat([formattedQuestion.id])
+                  [authedId]: {
+                      ...users[authedId],
+                      questions: users[authedId].questions.concat([formattedQuestion.id])
                   }
                 }
-                // console.log(formattedQuestion);
                 res(formattedQuestion)
             }, 1000)
         })

@@ -25,6 +25,23 @@ class MainPage extends React.Component {
         };
     }
 
+    componentDidMount = () => {
+        const { dispatch, history } = this.props;
+
+
+
+        const response = {
+            author: 'John Doe',
+            id: 'johndoe',
+            optionOneText: 'fdfdf',
+            optionTwoText: 'sdadas'
+        }
+
+        dispatch(
+            SessionAction.Action(SessionAction.Types.FETCH_QUESTION, response)
+        );
+    }
+
     handleItemClick = (e, {name}) => this.setState({activeItem: name})
 
     changeItem = (item) => this.setState({activeItem: item})

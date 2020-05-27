@@ -44,10 +44,12 @@ function SessionReducer(state = SessionDefaults, action) {
         case SessionAction.Types.FETCH_QUESTION_SUCCESS:
 
             {
-                const {author, id} = action.payload.response;
+                debugger;
+                const {author, id, idName} = action.payload.response;
                 const stateAux = state ?? {};
-                const stateAuthor = stateAux.users[author] ?? {};
-
+                const stateAuthor = stateAux.users[idName] ?? {};
+                console.log(stateAuthor.questions);
+                debugger;
                 return {
                     ... stateAux,
                     users: {

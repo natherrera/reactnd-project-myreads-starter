@@ -15,6 +15,31 @@ class NewQuestion extends React.PureComponent
         }
     };
 
+    onQuestionsSubmit = () =>
+    {
+
+        console.log(this.state.values);
+
+        const { dispatch } = this.props;
+
+
+    };
+
+    onInputChange = (e, { id, value }) =>
+    {
+        this.setState(prevState =>
+        {
+            const newValues = {
+                ...prevState.values,
+                [id]: value
+            };
+
+            return {
+                values: newValues,
+            };
+        });
+    };
+
     render()
     {
 
